@@ -1,0 +1,142 @@
+[
+  {
+    "id": "T-001",
+    "customer": "dana.whitfield@example.com",
+    "subject": "CHARGED TWICE - fix this now",
+    "body": "I was charged $49 TWICE this month for the same workspace. This is the second time your billing has messed up. Refund the extra charge today or I'm filing a chargeback with my bank and moving my team somewhere else.",
+    "expected": { "category": "billing", "escalate": true }
+  },
+  {
+    "id": "T-002",
+    "customer": "accounting@brightpath.example",
+    "subject": "VAT ID missing on invoice",
+    "body": "Hello, our March invoice (INV-20418) doesn't show our company VAT ID. How can we get an invoice with the VAT number on it? We need it for our bookkeeping.",
+    "expected": { "category": "billing", "escalate": false }
+  },
+  {
+    "id": "T-003",
+    "customer": "sam.r@example.com",
+    "subject": "it's broken",
+    "body": "the app stopped working yesterday. nothing loads properly. please fix",
+    "expected": { "category": "bug", "escalate": false }
+  },
+  {
+    "id": "T-004",
+    "customer": "priya.n@example.com",
+    "subject": "Gantt chart view?",
+    "body": "We'd love a Gantt/timeline view for projects with dependencies between tasks. Right now we export to a spreadsheet to plan releases. Is this on the roadmap? It would make Tasklane perfect for us.",
+    "expected": { "category": "feature_request", "escalate": false }
+  },
+  {
+    "id": "T-005",
+    "customer": "marcus.lee@example.com",
+    "subject": "Someone else is in my account",
+    "body": "I got an alert about a sign-in from a country I've never been to, and now my account email has been changed to an address I don't recognise. I can't log in any more. Our client contracts are in that workspace. Please lock it immediately.",
+    "expected": { "category": "account", "escalate": true }
+  },
+  {
+    "id": "T-006",
+    "customer": "lucia.fernandez@example.com",
+    "subject": "No puedo restablecer mi contraseña",
+    "body": "Hola, he pedido restablecer mi contraseña tres veces pero el correo no me llega. Ya revisé la bandeja de entrada. ¿Qué puedo hacer? Necesito entrar hoy para una reunión.",
+    "expected": { "category": "account", "escalate": false }
+  },
+  {
+    "id": "T-007",
+    "customer": "owen.b@example.com",
+    "subject": "How to cancel",
+    "body": "We're wrapping up our project and won't need the Pro plan after this month. How do I cancel, and will we lose our projects if we do?",
+    "expected": { "category": "billing", "escalate": false }
+  },
+  {
+    "id": "T-008",
+    "customer": "hannah.k@example.com",
+    "subject": "Refund request",
+    "body": "I upgraded to Pro 10 days ago but it turns out my team prefers our old tool. Can I get my money back? This was my first payment.",
+    "expected": { "category": "billing", "escalate": false }
+  },
+  {
+    "id": "T-009",
+    "customer": "tom.eriksen@example.com",
+    "subject": "Refund for annual plan",
+    "body": "I paid for the annual Business plan four months ago and we've barely used it since the team was restructured. I'd like a refund for the remaining eight months please.",
+    "expected": { "category": "billing", "escalate": true }
+  },
+  {
+    "id": "T-010",
+    "customer": "dev@stackforge.example",
+    "subject": "API rate limits on Business",
+    "body": "Quick question before we build our integration: what are the API rate limits on the Business plan, and what happens when we go over them?",
+    "expected": { "category": "other", "escalate": false }
+  },
+  {
+    "id": "T-011",
+    "customer": "grace.okafor@example.com",
+    "subject": "Lost phone, locked out by 2FA",
+    "body": "My phone was stolen last night and it had my authenticator app on it. I never saved the recovery codes. I'm completely locked out of my Tasklane account. How do I get back in?",
+    "expected": { "category": "account", "escalate": true }
+  },
+  {
+    "id": "T-012",
+    "customer": "jon.vega@example.com",
+    "subject": "All tasks gone from project",
+    "body": "After this morning's update every task in our 'Q3 Launch' project has disappeared. The project is there but empty. That's about 300 tasks and months of comments. Nobody on the team deleted anything. Where is our data??",
+    "expected": { "category": "bug", "escalate": true }
+  },
+  {
+    "id": "T-013",
+    "customer": "ops@lumenworks.example",
+    "subject": "Adding seats mid-month",
+    "body": "We need to add 3 people to our workspace next week, in the middle of our billing period. Will we be charged the full monthly price for each of them or only for the days left?",
+    "expected": { "category": "billing", "escalate": false }
+  },
+  {
+    "id": "T-014",
+    "customer": "elena.m@example.com",
+    "subject": "Desktop app crashes on launch",
+    "body": "Since yesterday the Windows desktop app (version 4.5.1, Windows 11) closes itself about two seconds after I open it. I've restarted my PC twice. The web version works fine.",
+    "expected": { "category": "bug", "escalate": false }
+  },
+  {
+    "id": "T-015",
+    "customer": "kai.t@example.com",
+    "subject": "Slack integration",
+    "body": "Would be great if task comments could be posted to a Slack channel automatically. Consider this a +1 from our 40-person team.",
+    "expected": { "category": "feature_request", "escalate": false }
+  },
+  {
+    "id": "T-016",
+    "customer": "r.dubois@example.com",
+    "subject": "GDPR deletion request",
+    "body": "Under Article 17 of the GDPR I request that you delete my account and all personal data you hold about me, and confirm in writing when this is done. If I don't hear back within 30 days I will contact the data protection authority.",
+    "expected": { "category": "account", "escalate": true }
+  },
+  {
+    "id": "T-017",
+    "customer": "mei.chen@example.com",
+    "subject": "Love the new board view",
+    "body": "No problem to report. I just wanted to say the new board view is fantastic and has made our stand-ups so much quicker. Thanks to the team!",
+    "expected": { "category": "other", "escalate": false }
+  },
+  {
+    "id": "T-018",
+    "customer": "it@harborline.example",
+    "subject": "URGENT: Tasklane down for our whole company",
+    "body": "Nobody at our company (120 users) has been able to load Tasklane for the past two hours. Every page returns a 502 error, on web and mobile, on different networks. We have a client deadline today. What is going on?",
+    "expected": { "category": "bug", "escalate": true }
+  },
+  {
+    "id": "T-019",
+    "customer": "new.hire@pinecrest.example",
+    "subject": "Invite link expired",
+    "body": "My manager invited me to our company workspace a couple of weeks ago but I only started today. When I click the link in the email it says the invitation has expired. How do I join?",
+    "expected": { "category": "account", "escalate": false }
+  },
+  {
+    "id": "T-020",
+    "customer": "pat.o@example.com",
+    "subject": "Android app not syncing",
+    "body": "Tasks I add on my laptop don't show up on my Android phone any more. The phone app is version 4.0. It used to work fine until last week.",
+    "expected": { "category": "bug", "escalate": false }
+  }
+]
