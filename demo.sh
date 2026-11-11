@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 30-second demo: three tickets, every agent step printed.
+# Quick demo: three tickets, every agent step printed.
 #   T-008  routine refund question   -> answered from the knowledge base
 #   T-006  password reset in Spanish -> answered in Spanish
 #   T-005  account takeover          -> escalated to a human

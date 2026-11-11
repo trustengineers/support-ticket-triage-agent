@@ -50,7 +50,7 @@ cp .env.example .env        # then put your ANTHROPIC_API_KEY in .env
 ./demo.sh
 ```
 
-`demo.sh` runs three tickets (a routine refund question, a password reset written in Spanish, and an account takeover) and prints every agent step. It takes about 30 seconds and saves the transcript to `results/demo-output.txt`.
+`demo.sh` runs three tickets (a routine refund question, a password reset written in Spanish, and an account takeover) and prints every agent step. It takes under a minute and saves the transcript to `results/demo-output.txt`.
 
 ## Usage
 
@@ -75,7 +75,58 @@ pytest
 ## Sample output
 
 <!-- sample:start -->
-_Not captured yet. Run `./demo.sh` and paste `results/demo-output.txt` here._
+The third ticket of `./demo.sh` on `claude-fable-5-2`, unedited. The full transcript of all three tickets is in [results/demo-output.txt](results/demo-output.txt).
+
+```text
+=== T-005 | claude-fable-5-2 ========================================
+  subject: Someone else is in my account
+  body:    I got an alert about a sign-in from a country I've never been to, and now my account email has
+           been changed to an address I don't recognise. I can't log in any more. Our client contracts are
+           in that workspace. Please lock it immediately.
+
+  [step 1] thought: This looks like an account takeover, so I'll classify it, search the knowledge base, and
+           escalate all at once since the search results will shape the draft holding reply I send
+           afterward.
+           I'm classifying this as an urgent account takeover, escalating it to a human right
+           away, and searching the FAQ for anything that can support a holding reply.
+  [step 1] tool:    classify_ticket({"category": "account", "priority": "urgent", "sentiment": "negative"})
+  [step 1] result:  {"ticket_id": "T-005", "category": "account", "priority": "urgent", "sentiment": "negative"}
+  [step 1] tool:    escalate_to_human({"ticket_id": "T-005", "reason": "Likely account takeover: customer reports a sign-in alert from an unfamiliar country, the account email was changed to an address he doesn't recognise, and he is locked out. He asks for the account/workspace (contains client contracts) to be locked immediately; needs identity verification, account lock and recovery by staff."})
+  [step 1] result:  {"escalated": true, "escalation_id": 1, "ticket_id": "T-005"}
+  [step 1] tool:    search_knowledge_base({"query": "account compromised unauthorized sign-in email changed"})
+  [step 1] result:  {"query": "account compromised unauthorized sign-in email changed", "results": [{"file": "reset-password.md", "title": "Reset your password", "score": 7.714, "text": "On the sign-in page choose Forgot password and enter your account email. The reset link is va...
+  [step 2] thought: The FAQ has nothing on account takeover, so I need a holding reply that doesn't promise anything
+           I can't back up. A password reset won't help here since the email on the account has changed.
+           I'll keep the reply honest and avoid committing to any lock or timeline.
+           The FAQ has no article
+           on compromised accounts, so I'm drafting a short holding reply that makes no promises beyond the
+           escalation that has already happened.
+  [step 2] tool:    draft_reply({"ticket_id": "T-005", "reply_text": "Hi Marcus,\n\nThank you for reporting this so quickly. We're treating it as a possible unauthorised access to your account, and your ticket has been flagged as urgent and passed to a member of our support team who can investigate and take action on the account directly.\n\nBecause the email address on the account has been changed, the self-service password reset won't work for you, so please don't rely on it. The agent handling your case will contact you at this address (marcus.lee@example.com) and will need to verify your identity before making changes to the account.\n\nPlease reply to this email if you notice anything further, such as additional sign-in alerts or messages you didn't expect.\n\nWe understand how important the contents of your workspace are, and we're sorry for the worry this is causing.\n\nBest regards,\nTasklane Support"})
+  [step 2] result:  {"saved": true, "reply_id": 3, "ticket_id": "T-005"}
+  [step 3] thought: T-005 is classified as an urgent account ticket with negative sentiment and escalated to a human
+           as a likely account takeover; nothing has been locked yet, because only staff can do that. I
+           also saved a holding reply for agent review that makes no commitment on timing or outcome, since
+           the FAQ has no article on compromised accounts.
+  => ESCALATED  category=account  priority=urgent  sentiment=negative
+     escalation: Likely account takeover: customer reports a sign-in alert from an unfamiliar country, the
+                 account email was changed to an address he doesn't recognise, and he is locked out. He asks for
+                 the account/workspace (contains client contracts) to be locked immediately; needs identity
+                 verification, account lock and recovery by staff.
+     drafted reply:
+       | Hi Marcus,
+
+       | Thank you for reporting this so quickly. We're treating it as a possible unauthorised access to your account, and your ticket has been flagged as urgent and passed to a member of our support team who can investigate and take action on the account directly.
+
+       | Because the email address on the account has been changed, the self-service password reset won't work for you, so please don't rely on it. The agent handling your case will contact you at this address (marcus.lee@example.com) and will need to verify your identity before making changes to the account.
+
+       | Please reply to this email if you notice anything further, such as additional sign-in alerts or messages you didn't expect.
+
+       | We understand how important the contents of your workspace are, and we're sorry for the worry this is causing.
+
+       | Best regards,
+       | Tasklane Support
+     3 model calls, 4 tool calls, 7,204 in / 993 out tokens, cost $0.0974, 12.3s
+```
 <!-- sample:end -->
 
 Each step is printed like this: the agent's thought, then each tool call with its arguments and result, then the outcome with model calls, tool calls, tokens, cost and time.
@@ -85,7 +136,15 @@ Each step is printed like this: the agent's thought, then each tool call with it
 `python eval.py` runs all 20 sample tickets through both models and compares each result with the ticket's labeled `expected` field. It writes [results/report.md](results/report.md), which also has a per-ticket table, and refreshes the table below.
 
 <!-- eval:start -->
-_Not run yet. Run `python eval.py` to fill in this table._
+Date: 2026-11-10. Tickets: 20 from `sample_tickets.json`. Step cap: 6.
+
+| Model | Category accuracy | Escalation accuracy | Avg tool calls | Total tokens (in / out) | Total cost | Cost per ticket | Avg latency |
+|---|---|---|---|---|---|---|---|
+| `claude-fable-5-2` | 100% | 95% | 3.7 | 139,330 / 18,339 | $1.8482 | $0.0924 | 12.7s |
+| `claude-haiku-5-5` | 100% | 85% | 3.4 | 124,983 / 17,950 | $0.0215 | $0.0011 | 5.5s |
+
+- `claude-fable-5-2`: $8 input / $40 output per million tokens.
+- `claude-haiku-5-5`: $0.1 input / $0.5 output per million tokens.
 <!-- eval:end -->
 
 - **Category accuracy**: the agent's category matches the label.
